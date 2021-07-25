@@ -1,0 +1,17 @@
+{
+  "name": "ren-tweet-badger-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "ren-tweet-badger-bot.js",
+  "scripts": {
+    "test": ""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^12.5.3",
+    "dotenv": "^10.0.0",
+    "twit": "^2.2.11"
+  }
+}
