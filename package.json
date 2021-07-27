@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.954.0",
+    "cors": "^2.8.5",
     "discord.js": "^12.5.3",
     "dotenv": "^10.0.0",
     "twit": "^2.2.11"
