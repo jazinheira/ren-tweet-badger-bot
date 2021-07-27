@@ -1,5 +1,5 @@
 console.log('[STARTING]');
-require('dotenv').config()
+require('dotenv').config();
 const Twit = require('twit')
 const Discord = require('discord.js');
 const client = new Discord.Client();
@@ -57,9 +57,9 @@ T.get('users/show', { screen_name: [process.env.TWITTER_SCREEN_NAME] }, function
           console.log("[🦡]");
           try {
             let channel = client.channels.fetch(process.env.DISCORD_CHANNEL_ID).then(channel => {
-              channel.send(url)
+              channel.send(url);
             }).catch(err => {
-              console.log(err)
+              console.log(err);
             })
           } catch (error) {
                 console.error(error);
