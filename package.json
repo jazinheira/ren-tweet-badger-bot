@@ -15,5 +15,9 @@
     "discord.js": "^12.5.3",
     "dotenv": "^10.0.0",
     "twit": "^2.2.11"
+  },
+  "devDependencies": {
+    "eslint": "^7.31.0",
+    "prettier": "2.3.2"
   }
 }
