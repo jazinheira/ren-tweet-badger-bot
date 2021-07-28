@@ -11,6 +11,7 @@ module.exports = (secretName = 'RBB', region = 'us-west-1') => {
 			} else {
                 // Decrypts secret using the associated KMS CMK.
                 // Depending on whether the secret is a string or binary, one of these fields will be populated.
+                var secretsObj = new Object();
                 if ('SecretString' in data) {
                     secretsObj = JSON.parse(data.SecretString);
                 } else {
