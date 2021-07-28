@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: bridge-tweet-bot
+  labels:
+    app: bridge-tweet-bot
+    service: bridge-tweet-bot
+spec:
+  selector:
+    app: bridge-tweet-bot
+  ports:
+    - name: http
+      port: 9000
+---

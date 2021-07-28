@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bridge-tweet-bot
+  labels:
+    app: bridge-tweet-bot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bridge-tweet-bot
+  template:
+    metadata:
+      labels:
+        app: bridge-tweet-bot
+    spec:
+      serviceAccountName: bridge-tweet-bot
+      containers:
+        - name: bridge-tweet-bot
+          image: IMAGE_NAME
+          imagePullPolicy: IfNotPresent
+          command: ["node", "ren-tweet-badger-bot.js"]
+          env:
+            - name: LOG_LEVEL
+              value: 'info'
+            - name: DISCORD_CHANNEL_ID
+              value: '868138786834505748'
+            - name: TWITTER_SCREEN_NAME
+              value: 'RenAssetsBot'
