@@ -1,6 +1,6 @@
 {
   "name": "ren-tweet-badger-bot",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "",
   "main": "ren-tweet-badger-bot.js",
   "scripts": {

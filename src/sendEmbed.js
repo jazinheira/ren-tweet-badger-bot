@@ -2,21 +2,25 @@ const { getEtherscanData } = require("./getEtherscanData.js");
 const Discord = require("discord.js");
 require("./getEtherscanData.js");
 
-const bannerUrl =
-  "https://cryptoslate.com/wp-content/uploads/2020/12/Badger-DAO-social.jpg";
-
-function sendEmbed(Discord, client, channelId, tweet, url) {
+function sendEmbed(
+  Discord,
+  client,
+  channelId,
+  tweet,
+  url,
+  bannerUrl = "https://cryptoslate.com/wp-content/uploads/2020/12/Badger-DAO-social.jpg"
+) {
   if (tweet.entities.urls[0] === undefined) {
     // Post didn't include an expanded url, which can cause some errors.
     sendMsg(Discord, client, channelId, tweet, url);
   } else {
     getEtherscanData(tweet.entities.urls[0].expanded_url).then((txDetails) => {
-      sendMsg(Discord, client, channelId, tweet, url, txDetails);
+      sendMsg(Discord, client, channelId, tweet, url, bannerUrl, txDetails);
     });
   }
 }
 
-function createEmbed(Discord, client, tweet, url, txDetails = null) {
+function createEmbed(Discord, client, tweet, url, bannerUrl, txDetails = null) {
   let authorName = tweet.user.name + " (@" + tweet.user.screen_name + ")";
 
   let txField = "N/A";
@@ -36,8 +40,16 @@ function createEmbed(Discord, client, tweet, url, txDetails = null) {
   return msg;
 }
 
-function sendMsg(Discord, client, channelId, tweet, url, txDetails = null) {
-  let msg = createEmbed(Discord, client, tweet, url, txDetails);
+function sendMsg(
+  Discord,
+  client,
+  channelId,
+  tweet,
+  url,
+  bannerUrl,
+  txDetails = null
+) {
+  let msg = createEmbed(Discord, client, tweet, url, bannerUrl, txDetails);
   try {
     let channel = client.channels
       .fetch(channelId)

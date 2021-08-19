@@ -49,6 +49,9 @@ async function setup() {
     if (secrets.DISCORD_CHANNEL_ID) {
       process.env.DISCORD_CHANNEL_ID = secrets.DISCORD_CHANNEL_ID;
     }
+    if (secrets.BANNER_URL) {
+      process.env.BANNER_URL = secrets.BANNER_URL;
+    }
 
     // Set up Twit.
     const T = new Twit({
@@ -96,7 +99,8 @@ function main(T) {
                 client,
                 process.env.DISCORD_CHANNEL_ID,
                 tweet,
-                url
+                url,
+                process.env.BANNER_URL
               );
             }
           }
