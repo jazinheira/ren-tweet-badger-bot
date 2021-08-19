@@ -1,5 +1,7 @@
 console.log("[STARTING]");
 require("dotenv").config();
+require("./sendEmbed.js");
+const { sendEmbed } = require("./sendEmbed.js");
 const Twit = require("twit");
 const Discord = require("discord.js");
 const client = new Discord.Client();
@@ -7,15 +9,24 @@ const client = new Discord.Client();
 setup();
 async function setup() {
   // Get vars from AWS SecretsManager if available and overwrite anything from .env.
-  let getSecrets = require("./getSecrets.js");
-  console.log("[WAITING] Attempting to get secrets from AWS SecretsManager.");
-  let secrets = await getSecrets(
-    process.env.AWS_SECRET_NAME,
-    process.env.AWS_REGION
-  );
-
-  if (secrets) {
+  // Set USE_LOCAL_ENV to true in .env to bypass using SecretsManager for development.
+  if (!process.env.USE_LOCAL_ENV) {
+    let getSecrets = require("./getSecrets.js");
+    console.log("Attempting to get secrets from AWS SecretsManager.");
+    let secrets = await getSecrets(
+      process.env.AWS_SECRET_NAME,
+      process.env.AWS_REGION
+    );
     console.log("Finished getting secrets from AWS SecretsManager.");
+  } else {
+    console.log(
+      "Using secrets from .env file and ignoring AWS SecretsManager."
+    );
+    // Using local env, set dummy secrets var.
+    var secrets = new Object();
+  }
+
+  if (secrets || process.env.USE_LOCAL_ENV == true) {
     if (secrets.TWITTER_CONSUMER_KEY) {
       process.env.TWITTER_CONSUMER_KEY = secrets.TWITTER_CONSUMER_KEY;
     }
@@ -75,21 +86,18 @@ function main(T) {
               tweet.user.screen_name +
               "/status/" +
               tweet.id_str;
-            //console.log('[New Tweet] '+ '('+tweet.user.screen_name+') '+ tweet.text);
+            console.log(
+              "[New Tweet] " + "(" + tweet.user.screen_name + ") " + tweet.text
+            );
             if (tweet.text.includes("🦡")) {
               console.log("[🦡]");
-              try {
-                let channel = client.channels
-                  .fetch(process.env.DISCORD_CHANNEL_ID)
-                  .then((channel) => {
-                    channel.send(url);
-                  })
-                  .catch((err) => {
-                    console.log(err);
-                  });
-              } catch (error) {
-                console.error(error);
-              }
+              sendEmbed(
+                Discord,
+                client,
+                process.env.DISCORD_CHANNEL_ID,
+                tweet,
+                url
+              );
             }
           }
         });
