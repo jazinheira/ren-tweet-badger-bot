@@ -11,6 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.954.0",
+    "axios": "^0.21.1",
+    "cheerio": "^1.0.0-rc.10",
     "cors": "^2.8.5",
     "discord.js": "^12.5.3",
     "dotenv": "^10.0.0",
